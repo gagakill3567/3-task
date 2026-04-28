@@ -1,13 +1,14 @@
 #include "Train.h"
 #include <string.h>
-Train::Train() {}
-Train::Train(char* station, int number, int time) {
-	strcpy_s(this->station, 10, station);
-	this->number = number;
-	this->time = time;
+
+Train::Train() : number(0), time(0) {
+    station[0] = '\0';
 }
-Train::Train(const char* station, int number, int time) {
-	strcpy_s(this->station, 10, station);
-	this->number = number;
-	this->time = time;
+
+Train::Train(char* st, int num, int t) : number(num), time(t) {
+    strcpy_s(this->station, 10, st);
+}
+
+Train::Train(const char* st, int num, int t) : number(num), time(t) {
+    strcpy_s(this->station, 10, st);
 }
