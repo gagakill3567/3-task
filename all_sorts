@@ -1,0 +1,184 @@
+#include <iostream>
+#include <algorithm>
+#include <cstdlib>
+
+using namespace std;
+
+//  ПЕЧАТЬ 
+void printArray(int a[], int n)
+{
+    for (int i = 0; i < n; i++)
+        cout << a[i] << " ";
+    cout << endl;
+}
+
+// INSERTION SORT 
+void insertionSort(int a[], int n)
+{
+    for (int i = 1; i < n; i++)
+    {
+        int key = a[i];
+        int j = i - 1;
+
+        while (j >= 0 && a[j] > key)
+        {
+            a[j + 1] = a[j];
+            j--;
+        }
+
+        a[j + 1] = key;
+    }
+}
+
+// SELECTION SORT
+void selectionSort(int a[], int n)
+{
+    for (int i = 0; i < n - 1; i++)
+    {
+        int minIndex = i;
+
+        for (int j = i + 1; j < n; j++)
+        {
+            if (a[j] < a[minIndex])
+                minIndex = j;
+        }
+
+        swap(a[i], a[minIndex]);
+    }
+}
+
+// BUBBLE SORT
+void bubbleSort(int a[], int n)
+{
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = 0; j < n - i - 1; j++)
+        {
+            if (a[j] > a[j + 1])
+                swap(a[j], a[j + 1]);
+        }
+    }
+}
+
+// SHELL SORT
+void shellSort(int a[], int n)
+{
+    for (int gap = n / 2; gap > 0; gap /= 2)
+    {
+        for (int i = gap; i < n; i++)
+        {
+            int temp = a[i];
+            int j = i;
+
+            while (j >= gap && a[j - gap] > temp)
+            {
+                a[j] = a[j - gap];
+                j -= gap;
+            }
+
+            a[j] = temp;
+        }
+    }
+}
+
+//QUICK SORT
+int partition(int a[], int low, int high)
+{
+    int pivot = a[high];
+    int i = low - 1;
+
+    for (int j = low; j < high; j++)
+    {
+        if (a[j] < pivot)
+        {
+            i++;
+            swap(a[i], a[j]);
+        }
+    }
+
+    swap(a[i + 1], a[high]);
+    return i + 1;
+}
+
+void quickSort(int a[], int low, int high)
+{
+    if (low < high)
+    {
+        int p = partition(a, low, high);
+        quickSort(a, low, p - 1);
+        quickSort(a, p + 1, high);
+    }
+}
+
+// QSORT (C) 
+int compareInt(const void* x, const void* y)
+{
+    int a = *(const int*)x;
+    int b = *(const int*)y;
+
+    if (a < b) return -1;
+    if (a > b) return 1;
+    return 0;
+}
+
+// STL SORT
+void stlSort(int a[], int n)
+{
+    sort(a, a + n);
+}
+
+// КОПИРОВАНИЕ 
+void copyArray(int from[], int to[], int n)
+{
+    for (int i = 0; i < n; i++)
+        to[i] = from[i];
+}
+
+int main()
+{
+    const int n = 8;
+    int original[n] = { 45, 12, 7, 89, 34, 23, 1, 56 };
+
+    int a1[n], a2[n], a3[n], a4[n], a5[n], a6[n], a7[n];
+
+    copyArray(original, a1, n);
+    copyArray(original, a2, n);
+    copyArray(original, a3, n);
+    copyArray(original, a4, n);
+    copyArray(original, a5, n);
+    copyArray(original, a6, n);
+    copyArray(original, a7, n);
+
+    cout << "Original: ";
+    printArray(original, n);
+
+    insertionSort(a1, n);
+    cout << "Insertion: ";
+    printArray(a1, n);
+
+    selectionSort(a2, n);
+    cout << "Selection: ";
+    printArray(a2, n);
+
+    bubbleSort(a3, n);
+    cout << "Bubble: ";
+    printArray(a3, n);
+
+    shellSort(a4, n);
+    cout << "Shell: ";
+    printArray(a4, n);
+
+    quickSort(a5, 0, n - 1);
+    cout << "Quick: ";
+    printArray(a5, n);
+
+    qsort(a6, n, sizeof(int), compareInt);
+    cout << "qsort: ";
+    printArray(a6, n);
+
+    stlSort(a7, n);
+    cout << "std::sort: ";
+    printArray(a7, n);
+
+    return 0;
+}
